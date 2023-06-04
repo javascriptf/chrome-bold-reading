@@ -29,9 +29,12 @@ function emboldenElement(parent) {
     if (child.nodeType == Node.ELEMENT_NODE) emboldenElement(child);
     else if (child.nodeType == Node.TEXT_NODE) {
       var text = child.textContent;
-      if (text.length < 32) continue;
+      if (text.length < 16) continue;
       var span = document.createElement('span');
-      span.innerHTML = text.replace(/\w+/g, w => `<strong>${w.charAt(0)}</strong>${w.slice(1)}`);
+      span.innerHTML = text.replace(/\w+/g, w => {
+        var half = Math.ceil(w.length / 2);
+        return `<strong>${w.slice(0, half)}</strong>${w.slice(half)}`;
+      });
       try { parent.replaceChild(span, child); }
       catch (e) { console.log('chrome-emboldened-reading: emboldenElement():', e); }
     }
@@ -49,7 +52,7 @@ function main() {
     if (article) break;
   }
   if (!article) return;
-  setTimeout(() => emboldenText(article), 5000);
+  setTimeout(() => emboldenElement(article), 5000);
 }
 main();
 // #endregion
