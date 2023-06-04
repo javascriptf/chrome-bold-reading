@@ -1,1 +1,1 @@
-Focused emboldening reading faster online.
+Focused emboldening for reading faster online.
